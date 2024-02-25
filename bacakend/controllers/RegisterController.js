@@ -42,13 +42,13 @@ const register = async (request, response) => {
     // Create a new user
     const userData = await new User({ ...request.body }).save();
 
-    response.status(201).send({
+    return response.status(201).send({
       success: true,
       data: userData,
       token: generateToken(userData._id),
     });
   } catch (error) {
-    response.status(500).send({
+    return response.status(500).send({
       success: false,
       message: "Internal server error",
       data: error,

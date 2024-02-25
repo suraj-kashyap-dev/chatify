@@ -9,40 +9,33 @@ import generateToken from "../configs/generateToken.js";
  */
 const login = async (request, response) => {
   try {
-    const { name, email, password } = request.body;
+    const { email, password } = request.body;
 
-    if (!name || !email || !password) {
-      response.status(422).send({
+    if (!email || !password) {
+      return response.status(422).send({
         success: false,
         message: "All inputs are required",
       });
     }
 
-    if (await User.findOne({ email: email })) {
-      response.status(422).send({
-        success: false,
-        message: "User is already exists",
+    let userData = await User.findOne({ email: email });
+
+    if (userData) {
+      return response.status(201).send({
+        success: true,
+        data: userData,
+        token: generateToken(userData._id),
       });
     }
 
-    if (await User.findOne({ name: name })) {
-      response.status(422).send({
-        success: false,
-        message: "Username is already taken",
-      });
-    }
-
-    const userData = await new User({ ...request.body }).save();
-
-    response.status(201).send({
-      success: true,
-      data: userData,
-      token: generateToken(userData._id),
+    return response.status(201).send({
+      success: false,
+      message: 'User not found.',
     });
   } catch (error) {
-    response.status(400).send({
+    return response.send({
       success: false,
-      data: error,
+      message: 'Internal server error',
     });
   }
 };
