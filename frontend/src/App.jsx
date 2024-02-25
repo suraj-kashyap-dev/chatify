@@ -1,9 +1,12 @@
+import Login from './pages/accounts/Login';
 import Home from "./pages/Home";
 
 function App(params) {
+  const isAuth = false;
+
   return (
     <>
-      <Home></Home>
+      {isAuth ? <Home></Home> : <Login></Login>}
     </>
   );
 }
