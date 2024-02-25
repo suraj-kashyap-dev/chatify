@@ -1,26 +1,30 @@
-function Screen() {
+function Screen({ user }) {
   return (
     <>
-      <div className="flex-1 sm:p-6 justify-between flex flex-col h-screen">
+      <div className="flex-1 sm:p-2 justify-between flex flex-col h-screen">
         <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
           <div className="relative flex items-center space-x-4">
             <div className="relative">
-              <span className="absolute text-green-500 right-0 bottom-0">
-                <svg width={20} height={20}>
-                  <circle cx={8} cy={8} r={8} fill="currentColor" />
-                </svg>
-              </span>
+              {user.is_active ? (
+                <span className="absolute text-green-500 right-0 bottom-0">
+                  <svg width={20} height={20}>
+                    <circle cx={8} cy={8} r={8} fill="currentColor" />
+                  </svg>
+                </span>
+              ) : (
+                ""
+              )}
               <img
-                src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=144&h=144"
-                alt=""
+                src={user.profile_image}
+                alt={user.name}
                 className="w-10 sm:w-16 h-10 sm:h-16 rounded-full"
               />
             </div>
             <div className="flex flex-col leading-tight">
               <div className="text-2xl mt-1 flex items-center">
-                <span className="text-gray-700 mr-3">Anderson Vanhron</span>
+                <span className="text-gray-700 mr-3">{user.name}</span>
               </div>
-              <span className="text-lg text-gray-600">Junior Developer</span>
+              <span className="text-lg text-gray-600">{user.email}</span>
             </div>
           </div>
           <div className="flex items-center space-x-2">
