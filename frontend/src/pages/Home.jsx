@@ -12,6 +12,7 @@ function Home() {
       profile_image:
         "https://flowbite.com/docs/images/people/profile-picture-1.jpg",
       is_active: true,
+      last_active: "11:14 PM",
     },
     {
       name: "Mayank Singh",
@@ -19,6 +20,7 @@ function Home() {
       profile_image:
         "https://flowbite.com/docs/images/people/profile-picture-3.jpg",
       is_active: false,
+      last_active: "10:44 PM",
     },
     {
       name: "Shivendra Gupta",
@@ -26,6 +28,7 @@ function Home() {
       profile_image:
         "https://flowbite.com/docs/images/people/profile-picture-4.jpg",
       is_active: true,
+      last_active: "10:44 PM",
     },
   ]);
 
@@ -34,11 +37,34 @@ function Home() {
       <div className="flex">
         <div className="h-lvh p-1 max-w-md bg-white border shadow-md sm:p-2 dark:bg-gray-800 dark:border-gray-700">
           <div className="relative p-2 bg-gray-100">
-            <img
-              src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=144&h=144"
-              alt="Suraj Kashyap"
-              className="w-10 h-10 rounded-full"
-            />
+            <div className="flex items-center justify-between">
+              <div>
+                <img
+                  src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=144&h=144"
+                  alt="Suraj Kashyap"
+                  className="w-10 h-10 rounded-full cursor-pointer"
+                />
+              </div>
+              <div>
+                <div className="flex justify-between gap-4">
+                  <img
+                    src="./group.png"
+                    className="bg-gray-300 p-1 h-7 w-7 rounded-full cursor-pointer"
+                    alt="Group"
+                  />
+                  <img
+                    src="./status.png"
+                    className="bg-gray-300 p-1 h-7 w-7 rounded-full cursor-pointer"
+                    alt="Status"
+                  />
+                  <img
+                    src="./marketing.png"
+                    className="bg-gray-300 p-1 h-7 w-7 rounded-full cursor-pointer"
+                    alt="Marketing"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
           <div className="flow-root">
             <form className="max-w-md mx-auto m-2">
@@ -118,7 +144,7 @@ function Home() {
                         </p>
                       </div>
                       <div class="inline-flex items-center text-sm text-gray-900 dark:text-white">
-                        10:02 PM
+                        {user.last_active}
                       </div>
                     </div>
                   </li>
