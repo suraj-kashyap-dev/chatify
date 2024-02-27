@@ -5,7 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "format": "prettier --write ./"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +19,7 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.2.0",
+    "prettier": "^3.2.5",
     "socket.io": "^4.7.4"
   }
 }

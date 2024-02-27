@@ -30,12 +30,12 @@ const login = async (request, response) => {
 
     return response.status(201).send({
       success: false,
-      message: 'User not found.',
+      message: "User not found.",
     });
   } catch (error) {
     return response.send({
       success: false,
-      message: 'Internal server error',
+      message: "Internal server error",
     });
   }
 };
