@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "autoprefixer": "^10.4.17",
+    "axios": "^1.6.7",
     "postcss-cli": "^11.0.0",
     "prettier": "^3.2.5",
     "react": "^18.2.0",
