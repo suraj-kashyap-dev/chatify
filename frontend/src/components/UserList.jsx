@@ -1,5 +1,4 @@
 export default function UserList({ users, setHasUser }) {
-
   return (
     <>
       <div className="select-none h-lvh p-1 max-w-md w-[600px] bg-white border shadow-md sm:p-2 dark:bg-gray-800 dark:border-gray-700">

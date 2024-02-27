@@ -22,7 +22,7 @@ function Login() {
     try {
       const response = await axios.post(
         "http://localhost:8000/api/login",
-        credentials
+        credentials,
       );
 
       if (response.status === 201) {
@@ -115,6 +115,6 @@ function Login() {
       </div>
     </>
   );
-};
+}
 
 export default Login;
