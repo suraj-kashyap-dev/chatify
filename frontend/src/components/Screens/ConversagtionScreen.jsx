@@ -1,12 +1,12 @@
-import Toolbar from "./Toolbar";
-import ReceivedBubble from "./ReceivedBubble";
-import Sendedbubble from "./Sendedbubble";
-import Avatar from "./Avatar";
+import Toolbar from "../Toolbar";
+import ReceivedBubble from "../Bubbles/ReceivedBubble";
+import Sendedbubble from "../Bubbles/Sendedbubble";
+import Avatar from "../Avatar";
 import React, { useState, useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
-import { recieveMessageRoute, sendMessageRoute } from "../utils/api";
-import ChatInput from "./BottomInput";
+import { recieveMessageRoute, sendMessageRoute } from "../../utils/api";
+import ChatInput from "../BottomInput";
 
 function ConversagtionScreen({ currentChat, socket }) {
   const [messages, setMessages] = useState([]);
@@ -83,16 +83,14 @@ function ConversagtionScreen({ currentChat, socket }) {
   return (
     <>
       <div className="flex-1 sm:p-2 justify-between flex flex-col h-screen">
-        <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
+        <div className="flex sm:items-center justify-between px-1 border-b-2 border-gray-200">
           <div className="relative flex items-center space-x-4">
             <div className="relative">
               <Avatar user={currentChat}></Avatar>
             </div>
             <div className="flex flex-col leading-tight">
               <div className="text-2xl mt-1 flex items-center">
-                <span className="text-gray-700 mr-3">
-                  {currentChat.username}
-                </span>
+                <span className="text-gray-700 mr-3">{currentChat.name}</span>
               </div>
               <span className="text-lg text-gray-600">{currentChat.email}</span>
             </div>

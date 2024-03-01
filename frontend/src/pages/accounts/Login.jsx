@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { loginRoute } from "../../utils/api";
 
 function Login() {
-  const [values, setValues] = useState({ username: "", password: "" });
+  const [values, setValues] = useState({ name: "", password: "" });
 
   const toastOptions = {
     position: "bottom-right",
@@ -34,9 +34,9 @@ function Login() {
   };
 
   const validateForm = () => {
-    const { username, password } = values;
+    const { name, password } = values;
 
-    if (username === "") {
+    if (name === "") {
       toast.error("Email and Password is required.", toastOptions);
 
       return false;
@@ -53,10 +53,10 @@ function Login() {
     event.preventDefault();
 
     if (validateForm()) {
-      const { username, password } = values;
+      const { name, password } = values;
 
       const { data } = await axios.post(loginRoute, {
-        username,
+        name,
         password,
       });
 
@@ -94,18 +94,18 @@ function Login() {
 
               <div className="mt-4">
                 <label
-                  htmlFor="username"
+                  htmlFor="name"
                   className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200"
                 >
-                  Username
+                  Name
                 </label>
                 <input
-                  id="username"
-                  name="username"
+                  id="name"
+                  name="name"
                   onChange={handleChange}
                   className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
                   type="text"
-                  placeholder="Username"
+                  placeholder="name"
                 />
               </div>
               <div className="mt-4">

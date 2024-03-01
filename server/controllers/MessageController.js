@@ -14,6 +14,7 @@ const getMessages = async (request, response, next) => {
       return {
         fromSelf: msg.sender.toString() === from,
         message: msg.message.text,
+        created_at: msg.createdAt,
       };
     });
     response.json(projectedMessages);

@@ -17,7 +17,7 @@ function Register() {
   };
 
   const [values, setValues] = useState({
-    username: "",
+    name: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -39,7 +39,7 @@ function Register() {
   };
 
   const handleValidation = () => {
-    const { password, confirmPassword, username, email } = values;
+    const { password, confirmPassword, name, email } = values;
 
     if (password !== confirmPassword) {
       toast.error(
@@ -48,11 +48,8 @@ function Register() {
       );
 
       return false;
-    } else if (username.length < 3) {
-      toast.error(
-        "Username should be greater than 3 characters.",
-        toastOptions,
-      );
+    } else if (name.length < 3) {
+      toast.error("name should be greater than 3 characters.", toastOptions);
 
       return false;
     } else if (password.length < 8) {
@@ -75,10 +72,10 @@ function Register() {
     event.preventDefault();
 
     if (handleValidation()) {
-      const { email, username, password } = values;
+      const { email, name, password } = values;
 
       const { data } = await axios.post(registerRoute, {
-        username,
+        name,
         email,
         password,
       });
@@ -119,14 +116,14 @@ function Register() {
                   className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200"
                   htmlFor="email"
                 >
-                  Username
+                  name
                 </label>
                 <input
-                  id="username"
-                  name="username"
+                  id="name"
+                  name="name"
                   className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
                   type="text"
-                  placeholder="Username"
+                  placeholder="name"
                   onChange={(e) => handleChange(e)}
                 />
               </div>

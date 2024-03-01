@@ -1,12 +1,11 @@
 import mongoose from "mongoose";
 
 const userSchema = mongoose.Schema({
-  username: {
+  name: {
     type: String,
     required: true,
     min: 3,
     max: 20,
-    unique: true,
   },
   email: {
     type: String,
@@ -19,7 +18,7 @@ const userSchema = mongoose.Schema({
     required: true,
     min: 8,
   },
-  isAvatarImageSet: {
+  profile: {
     type: Boolean,
     default: false,
   },

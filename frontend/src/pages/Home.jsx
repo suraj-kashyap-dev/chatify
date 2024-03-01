@@ -1,10 +1,10 @@
-import ConversagtionScreen from "../components/ConversagtionScreen";
-import Welcome from "../components/Welcome";
-import Conversations from "../components/Conversations";
+import ConversagtionScreen from "../components/Screens/ConversagtionScreen";
+import Welcome from "../components/Screens/Welcome";
+import ConversationList from "../components/ConversationList";
 import { allUsersRoute, host } from "../utils/api";
 import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
-import axios from 'axios';
+import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 
 function Home() {
@@ -41,13 +41,9 @@ function Home() {
   useEffect(() => {
     const fetchData = async () => {
       if (currentUser) {
-        if (currentUser.isAvatarImageSet) {
-          const data = await axios.get(`${allUsersRoute}/${currentUser._id}`);
+        const data = await axios.get(`${allUsersRoute}/${currentUser._id}`);
 
-          setContacts(data.data);
-        } else {
-          navigate("/setAvatar");
-        }
+        setContacts(data.data);
       }
     };
 
@@ -61,15 +57,18 @@ function Home() {
   return (
     <>
       <div className="flex">
-        <Conversations
+        <ConversationList
           contacts={contacts}
           changeChat={handleChatChange}
-        ></Conversations>
+        ></ConversationList>
 
         {!currentChat ? (
           <Welcome />
         ) : (
-          <ConversagtionScreen currentChat={currentChat} socket={socket}></ConversagtionScreen>
+          <ConversagtionScreen
+            currentChat={currentChat}
+            socket={socket}
+          ></ConversagtionScreen>
         )}
       </div>
     </>

@@ -9,13 +9,13 @@ import bcrypt from "bcrypt";
  */
 const register = async (request, response, next) => {
   try {
-    const { username, email, password } = request.body;
+    const { name, email, password } = request.body;
 
-    const usernameCheck = await User.findOne({ username });
+    const nameCheck = await User.findOne({ name });
 
-    if (usernameCheck) {
+    if (nameCheck) {
       return response.json({
-        msg: "Username already used",
+        msg: "name already used",
         status: false,
       });
     }
@@ -33,7 +33,7 @@ const register = async (request, response, next) => {
 
     const user = await User.create({
       email,
-      username,
+      name,
       password: hashedPassword,
     });
 
