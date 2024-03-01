@@ -1,44 +1,76 @@
-import { useState } from "react";
-import Screen from "../components/Screen";
+import ConversagtionScreen from "../components/ConversagtionScreen";
 import Welcome from "../components/Welcome";
-import UserList from "../components/UserList";
+import Conversations from "../components/Conversations";
+import { allUsersRoute, host } from "../utils/api";
+import { useNavigate } from "react-router-dom";
+import { io } from "socket.io-client";
+import axios from 'axios';
+import React, { useEffect, useState, useRef } from "react";
 
 function Home() {
-  const [hasUser, setHasUser] = useState(null);
+  const navigate = useNavigate();
 
-  const [users, setUsers] = useState([
-    {
-      name: "Suraj Kashyap",
-      email: "suraj.kashyap370@webkul.in",
-      profile_image:
-        "https://flowbite.com/docs/images/people/profile-picture-1.jpg",
-      is_active: true,
-      last_active: "11:14 PM",
-    },
-    {
-      name: "Mayank Singh",
-      email: "mayank.singh380@webkul.in",
-      profile_image:
-        "https://flowbite.com/docs/images/people/profile-picture-3.jpg",
-      is_active: false,
-      last_active: "10:44 PM",
-    },
-    {
-      name: "Shivendra Gupta",
-      email: "shivendra.gupta370@webkul.in",
-      profile_image:
-        "https://flowbite.com/docs/images/people/profile-picture-4.jpg",
-      is_active: true,
-      last_active: "10:44 PM",
-    },
-  ]);
+  const socket = useRef();
+
+  const [contacts, setContacts] = useState([]);
+
+  const [currentChat, setCurrentChat] = useState(undefined);
+
+  const [currentUser, setCurrentUser] = useState(undefined);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!localStorage.getItem("current-user")) {
+        navigate("/login");
+      } else {
+        setCurrentUser(await JSON.parse(localStorage.getItem("current-user")));
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (currentUser) {
+      socket.current = io(host);
+
+      socket.current.emit("add-user", currentUser._id);
+    }
+  }, [currentUser]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (currentUser) {
+        if (currentUser.isAvatarImageSet) {
+          const data = await axios.get(`${allUsersRoute}/${currentUser._id}`);
+
+          setContacts(data.data);
+        } else {
+          navigate("/setAvatar");
+        }
+      }
+    };
+
+    fetchData();
+  }, [currentUser]);
+
+  const handleChatChange = (chat) => {
+    setCurrentChat(chat);
+  };
 
   return (
     <>
       <div className="flex">
-        <UserList users={users} setHasUser={setHasUser}></UserList>
+        <Conversations
+          contacts={contacts}
+          changeChat={handleChatChange}
+        ></Conversations>
 
-        {hasUser ? <Screen user={hasUser}></Screen> : <Welcome></Welcome>}
+        {!currentChat ? (
+          <Welcome />
+        ) : (
+          <ConversagtionScreen currentChat={currentChat} socket={socket}></ConversagtionScreen>
+        )}
       </div>
     </>
   );

@@ -13,11 +13,15 @@
   "dependencies": {
     "autoprefixer": "^10.4.17",
     "axios": "^1.6.7",
+    "dotenv": "^16.4.5",
     "postcss-cli": "^11.0.0",
     "prettier": "^3.2.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.22.1"
+    "react-router-dom": "^6.22.1",
+    "react-toastify": "^10.0.4",
+    "socket.io-client": "^4.7.4",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.56",
