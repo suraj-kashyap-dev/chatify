@@ -9,13 +9,15 @@ import bcrypt from "bcrypt";
  */
 const login = async (request, response, next) => {
   try {
-    const { name, password } = request.body;
+    console.log(request.body);
+    
+    const { email, password } = request.body;
 
-    const user = await User.findOne({ name });
+    const user = await User.findOne({ email });
 
     if (!user) {
       return response.json({
-        msg: "Incorrect name or Password",
+        msg: "Incorrect email or Password",
         status: false,
       });
     }
@@ -24,7 +26,7 @@ const login = async (request, response, next) => {
 
     if (!isPasswordValid) {
       return response.json({
-        msg: "Incorrect name or Password",
+        msg: "Incorrect email or Password",
         status: false,
       });
     }
