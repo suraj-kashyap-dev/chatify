@@ -1,7 +1,7 @@
 import Screen from "./components/Screens/Screen";
 import Welcome from "./components/Screens/Welcome";
 import BaseSideBar from "./components/Base/BaseSidebar";
-import { usersRoute, host } from "./utils/api";
+import { usersRoute, host, updateStatus } from "./utils/api";
 import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import axios from "axios";
@@ -40,6 +40,26 @@ function App() {
       currentUser.is_active = true;
 
       socket.current.emit("add-user", currentUser);
+
+      socket.current.on("user-status-change", (user) => {
+        setContacts((prevContacts) =>
+          prevContacts.map((contact) =>
+            contact._id === user.userId
+              ? { ...contact, is_active: user.is_active }
+              : contact
+          )
+        );
+
+        const updateActiveStatus = async (user) => {
+          if (currentUser) {
+            await axios.post(`${updateStatus}/${currentUser._id}`, {
+              is_active: user.is_active
+            });
+          }
+        };
+
+        updateActiveStatus(user);
+      });
     }
   }, [currentUser]);
 

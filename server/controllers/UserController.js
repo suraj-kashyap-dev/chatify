@@ -20,6 +20,13 @@ const users = async (request, response, next) => {
   }
 };
 
+/**
+ *  Get all users.
+ *
+ * @param {Object} request
+ * @param {Object} response
+ * @param {Object} next
+ */
 const logout = async (request, response, next) => {
   try {
     if (!request.params.id) {
@@ -34,4 +41,31 @@ const logout = async (request, response, next) => {
   }
 };
 
-export { users, logout };
+/**
+ *  Get all users.
+ *
+ * @param {Object} request
+ * @param {Object} response
+ */
+const updateStatus = async (request, response) => {
+  try {
+    const userId = request.params.id;
+
+    if (!userId) {
+      return response.json({ msg: "User id is required " });
+    }
+
+    const { is_active } = request.body;
+
+    if (is_active === undefined) {
+      return response.json({ msg: "is_active field is required" });
+    }
+
+    await User.findByIdAndUpdate(userId, { is_active });
+
+    return response.status(200).send();
+  } catch (error) {
+    return response.status(500).json({ error: "Internal Server Error" });
+  }
+};
+export { users, logout, updateStatus };
