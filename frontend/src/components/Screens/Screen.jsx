@@ -20,7 +20,7 @@ function ConversagtionScreen({ currentChat, socket }) {
   useEffect(() => {
     const fetchData = async () => {
       const data = await JSON.parse(
-        localStorage.getItem(import.meta.env.VITE_AUTH_USER),
+        localStorage.getItem(import.meta.env.VITE_AUTH_USER)
       );
 
       const response = await axios.post(recieveMessageRoute, {
@@ -46,7 +46,7 @@ function ConversagtionScreen({ currentChat, socket }) {
 
   const handleSendMsg = async (msg) => {
     const data = await JSON.parse(
-      localStorage.getItem(import.meta.env.VITE_AUTH_USER),
+      localStorage.getItem(import.meta.env.VITE_AUTH_USER)
     );
 
     socket.current.emit("send-msg", {
@@ -99,10 +99,24 @@ function ConversagtionScreen({ currentChat, socket }) {
       <div className="flex-1 sm:p-2 justify-between flex flex-col h-screen">
         <div className="flex sm:items-center justify-between px-1 border-b-2 border-gray-200">
           <div className="relative flex items-center space-x-4">
-            <div className="relative">
-               <button onClick={toggleDrawer}>
-                  <Avatar user={currentChat}></Avatar>
-               </button>
+            <div className="flex items-center justify-center gap-4">
+              <svg
+                className="h-7 w-7"
+                viewBox="0 0 1024 1024"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill="#000000"
+                  d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z"
+                />
+                <path
+                  fill="#000000"
+                  d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z"
+                />
+              </svg>
+              <button onClick={toggleDrawer}>
+                <Avatar user={currentChat}></Avatar>
+              </button>
             </div>
             <div className="flex flex-col leading-tight">
               <div className="text-2xl mt-1 flex items-center">
