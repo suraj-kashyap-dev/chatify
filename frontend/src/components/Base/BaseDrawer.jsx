@@ -38,6 +38,7 @@ const Drawer = ({ isOpen, position, size, onClose, title, children }) => {
             ? "-translate-x-full"
             : "translate-x-full"
       } z-50`}
+      style={{ zIndex: 9999 }} // Set a high z-index value
     >
       <div className="flex justify-between p-4 border-b">
         <h2 className="text-xl font-bold">{title}</h2>

@@ -10,7 +10,7 @@ import ChatInput from "../Base/BaseChatInput";
 import formatTimestamp from "../../helpers/dateTimeConverter";
 import Drawer from "../Base/BaseDrawer";
 
-function ConversagtionScreen({ currentChat, socket }) {
+function ConversagtionScreen({ currentChat, socket, setCurrentChat }) {
   const [messages, setMessages] = useState([]);
 
   const scrollRef = useRef();
@@ -101,7 +101,8 @@ function ConversagtionScreen({ currentChat, socket }) {
           <div className="relative flex items-center space-x-4">
             <div className="flex items-center justify-center gap-4">
               <svg
-                className="h-7 w-7"
+                onClick={() => setCurrentChat(undefined)}
+                className="h-7 w-7 cursor-pointer"
                 viewBox="0 0 1024 1024"
                 xmlns="http://www.w3.org/2000/svg"
               >

@@ -1,11 +1,12 @@
 import Screen from "./components/Screens/Screen";
 import Welcome from "./components/Screens/Welcome";
-import ConversationList from "./components/Base/BaseSidebar";
+import BaseSideBar from "./components/Base/BaseSidebar";
 import { usersRoute, host } from "./utils/api";
 import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
+import BaseMinSidebar from "./components/Base/BaseMiniSidebar";
 
 function App() {
   const navigate = useNavigate();
@@ -24,9 +25,7 @@ function App() {
         navigate("/login");
       } else {
         setCurrentUser(
-          await JSON.parse(
-            localStorage.getItem(import.meta.env.VITE_AUTH_USER),
-          ),
+          await JSON.parse(localStorage.getItem(import.meta.env.VITE_AUTH_USER))
         );
       }
     };
@@ -63,15 +62,23 @@ function App() {
   return (
     <>
       <div className="flex">
-        <ConversationList
-          contacts={contacts}
-          changeChat={handleChatChange}
-        ></ConversationList>
+        <div className="flex">
+          <BaseMinSidebar></BaseMinSidebar>
+
+          <BaseSideBar
+            contacts={contacts}
+            changeChat={handleChatChange}
+          ></BaseSideBar>
+        </div>
 
         {!currentChat ? (
           <Welcome />
         ) : (
-          <Screen currentChat={currentChat} socket={socket}></Screen>
+          <Screen
+            currentChat={currentChat}
+            setCurrentChat={setCurrentChat}
+            socket={socket}
+          ></Screen>
         )}
       </div>
     </>
