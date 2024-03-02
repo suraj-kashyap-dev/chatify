@@ -1,21 +1,11 @@
 import { useState, useEffect } from "react";
-import Avatar from "./BaesAvatar";
-import Drawer from "./BaseDrawer";
 import { useNavigate } from "react-router-dom";
 import ConfirmationModal from "./BaseConfirmationModal";
 import axios from "axios";
 import { logoutRoute } from "../../utils/api";
 
 function TopBar() {
-  const [currentUser, setCurrentUser] = useState({
-    name: "Guest",
-  });
-
   const [isDrawerOpen, setDrawerOpen] = useState(false);
-
-  const toggleDrawer = () => {
-    setDrawerOpen(!isDrawerOpen);
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,17 +56,7 @@ function TopBar() {
       <div className="relative p-2">
         <div className="flex items-center justify-between">
           <div>
-            <button onClick={toggleDrawer}>
-              <Avatar user={currentUser}></Avatar>
-            </button>
-
-            <Drawer
-              isOpen={isDrawerOpen}
-              position="left"
-              size="small"
-              onClose={toggleDrawer}
-              title={currentUser.name}
-            ></Drawer>
+            <span className="text-2xl">Chats</span>
           </div>
           <div>
             <div className="flex justify-between gap-4">
