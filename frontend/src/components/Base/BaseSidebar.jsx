@@ -32,7 +32,7 @@ function ConversationList({ contacts, changeChat }) {
 
   return (
     <>
-      <div className="select-none h-lvh p-1 w-1/4 bg-white border shadow-md sm:p-2 dark:bg-gray-800 dark:border-gray-700">
+      <div className="select-none h-lvh p-1 w-1/4 min-w-[319px] bg-white border shadow-md sm:p-2 dark:bg-gray-800 dark:border-gray-700">
         <TopBar></TopBar>
         <div className="flow-root">
           <SearchBar></SearchBar>

@@ -37,7 +37,7 @@ function ReceivedBubble({ message, user }) {
 
       <Drawer
         isOpen={isDrawerOpen}
-        position="right"
+        position="left"
         size="small"
         onClose={toggleDrawer}
         title={user.name}

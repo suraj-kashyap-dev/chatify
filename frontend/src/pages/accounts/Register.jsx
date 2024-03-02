@@ -78,7 +78,10 @@ function Register() {
       }
 
       if (data.status) {
-        localStorage.setItem(import.meta.env.VITE_AUTH_USER, JSON.stringify(data.user));
+        localStorage.setItem(
+          import.meta.env.VITE_AUTH_USER,
+          JSON.stringify(data.user),
+        );
 
         navigate("/");
       }

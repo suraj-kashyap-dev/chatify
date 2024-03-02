@@ -67,7 +67,7 @@ function Login() {
       if (data.status) {
         localStorage.setItem(
           import.meta.env.VITE_AUTH_USER,
-          JSON.stringify(data.user)
+          JSON.stringify(data.user),
         );
 
         setLoading(false);

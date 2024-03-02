@@ -5,6 +5,4 @@ const toastOptions = {
   draggable: true,
 };
 
-export {
-    toastOptions
-}
+export { toastOptions };

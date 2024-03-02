@@ -44,7 +44,9 @@ function TopBar() {
 
   const navigate = useNavigate();
   const handleConfirmAction = async () => {
-    const id = await JSON.parse(localStorage.getItem(import.meta.env.VITE_AUTH_USER))._id;
+    const id = await JSON.parse(
+      localStorage.getItem(import.meta.env.VITE_AUTH_USER),
+    )._id;
 
     const data = await axios.get(`${logoutRoute}/${id}`);
 
@@ -74,8 +76,7 @@ function TopBar() {
               size="small"
               onClose={toggleDrawer}
               title={currentUser.name}
-            >
-            </Drawer>
+            ></Drawer>
           </div>
           <div>
             <div className="flex justify-between gap-4">

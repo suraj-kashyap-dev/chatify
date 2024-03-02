@@ -3,7 +3,7 @@ import Modal from "react-modal";
 
 const ConfirmationModal = ({ isOpen, onClose, onConfirm, title, content }) => {
   useEffect(() => {
-    Modal.setAppElement('#root');
+    Modal.setAppElement("#root");
   }, []);
 
   return (

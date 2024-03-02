@@ -8,6 +8,7 @@ import axios from "axios";
 import { recieveMessageRoute, sendMessageRoute } from "../../utils/api";
 import ChatInput from "../Base/BaseChatInput";
 import formatTimestamp from "../../helpers/dateTimeConverter";
+import Drawer from "../Base/BaseDrawer";
 
 function ConversagtionScreen({ currentChat, socket }) {
   const [messages, setMessages] = useState([]);
@@ -18,7 +19,9 @@ function ConversagtionScreen({ currentChat, socket }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await JSON.parse(localStorage.getItem(import.meta.env.VITE_AUTH_USER));
+      const data = await JSON.parse(
+        localStorage.getItem(import.meta.env.VITE_AUTH_USER),
+      );
 
       const response = await axios.post(recieveMessageRoute, {
         from: data._id,
@@ -34,14 +37,17 @@ function ConversagtionScreen({ currentChat, socket }) {
   useEffect(() => {
     const getCurrentChat = async () => {
       if (currentChat) {
-        await JSON.parse(localStorage.getItem(import.meta.env.VITE_AUTH_USER))._id;
+        await JSON.parse(localStorage.getItem(import.meta.env.VITE_AUTH_USER))
+          ._id;
       }
     };
     getCurrentChat();
   }, [currentChat]);
 
   const handleSendMsg = async (msg) => {
-    const data = await JSON.parse(localStorage.getItem(import.meta.env.VITE_AUTH_USER));
+    const data = await JSON.parse(
+      localStorage.getItem(import.meta.env.VITE_AUTH_USER),
+    );
 
     socket.current.emit("send-msg", {
       to: currentChat._id,
@@ -82,13 +88,21 @@ function ConversagtionScreen({ currentChat, socket }) {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
+
+  const toggleDrawer = () => {
+    setDrawerOpen(!isDrawerOpen);
+  };
+
   return (
     <>
       <div className="flex-1 sm:p-2 justify-between flex flex-col h-screen">
         <div className="flex sm:items-center justify-between px-1 border-b-2 border-gray-200">
           <div className="relative flex items-center space-x-4">
             <div className="relative">
-              <Avatar user={currentChat}></Avatar>
+               <button onClick={toggleDrawer}>
+                  <Avatar user={currentChat}></Avatar>
+               </button>
             </div>
             <div className="flex flex-col leading-tight">
               <div className="text-2xl mt-1 flex items-center">
@@ -123,6 +137,14 @@ function ConversagtionScreen({ currentChat, socket }) {
 
         <ChatInput handleSendMsg={handleSendMsg}></ChatInput>
       </div>
+
+      <Drawer
+        isOpen={isDrawerOpen}
+        position="left"
+        size="small"
+        onClose={toggleDrawer}
+        title="Suraj KAshayp"
+      ></Drawer>
     </>
   );
 }

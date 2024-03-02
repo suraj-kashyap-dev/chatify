@@ -50,8 +50,6 @@ io.on("connection", (socket) => {
   global.chatSocket = socket;
 
   socket.on("add-user", (user) => {
-    console.log(user);
-
     onlineUsers.set(user._id, {
       socketId: socket.id,
       is_active: true,
