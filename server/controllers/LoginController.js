@@ -9,8 +9,6 @@ import bcrypt from "bcrypt";
  */
 const login = async (request, response, next) => {
   try {
-    console.log(request.body);
-    
     const { email, password } = request.body;
 
     const user = await User.findOne({ email });

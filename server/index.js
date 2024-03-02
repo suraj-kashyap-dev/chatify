@@ -18,7 +18,7 @@ app.use(
 
 const connectToDb = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI).then(() => {
+    await mongoose.connect(process.env.APP_MONGODB_URI).then(() => {
       console.log("connected to the database...");
     });
   } catch (error) {
@@ -31,15 +31,15 @@ connectToDb();
 app.use("/api/auth", userRoutes);
 app.use("/api/messages", messageRoutes);
 
-const server = app.listen(process.env.APP_PORT || 5000, () => {
+const server = app.listen(process.env.APP_SERVER_PORT || 5000, () => {
   console.log(
-    `Server is running on port ${process.env.APP_URL}:${process.env.APP_PORT}`,
+    `Server is running on port ${process.env.APP_SERVER_URL}:${process.env.APP_SERVER_PORT}`,
   );
 });
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: process.env.APP_PUBLIC_URL,
     credentials: true,
   },
 });
@@ -49,8 +49,8 @@ global.onlineUsers = new Map();
 io.on("connection", (socket) => {
   global.chatSocket = socket;
 
-  socket.on("add-user", (userId) => {
-    onlineUsers.set(userId, socket.id);
+  socket.on("add-user", (user) => {
+    onlineUsers.set(user._id, socket.id);
   });
 
   socket.on("send-msg", (data) => {

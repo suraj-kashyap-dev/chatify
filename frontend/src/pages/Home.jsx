@@ -34,7 +34,9 @@ function Home() {
     if (currentUser) {
       socket.current = io(host);
 
-      socket.current.emit("add-user", currentUser._id);
+      currentUser.is_active = true;
+
+      socket.current.emit("add-user", currentUser);
     }
   }, [currentUser]);
 
