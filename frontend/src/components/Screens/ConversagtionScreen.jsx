@@ -6,7 +6,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { recieveMessageRoute, sendMessageRoute } from "../../utils/api";
-import ChatInput from "../BottomInput";
+import ChatInput from "../ChatInput";
 import formatTimestamp from "../../helpers/dateTimeConverter";
 
 function ConversagtionScreen({ currentChat, socket }) {

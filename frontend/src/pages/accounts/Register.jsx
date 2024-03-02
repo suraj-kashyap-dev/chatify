@@ -4,17 +4,10 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { registerRoute } from "../../utils/api";
+import { toastOptions } from "../../utils/toast";
 
 function Register() {
   const navigate = useNavigate();
-
-  const toastOptions = {
-    position: "bottom-center",
-    autoClose: 8000,
-    pauseOnHover: true,
-    draggable: true,
-    theme: "dark",
-  };
 
   const [values, setValues] = useState({
     name: "",

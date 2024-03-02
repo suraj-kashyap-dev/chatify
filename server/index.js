@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import userRoutes from "./routes/userRoutes.js";
-import messageRoutes from './routes/messagesRoutes.js';
+import messageRoutes from "./routes/messagesRoutes.js";
 import cors from "cors";
 import { Server } from "socket.io";
 
@@ -13,7 +13,7 @@ dotenv.config();
 app.use(
   cors({
     origin: "*",
-  }),
+  })
 );
 
 const connectToDb = async () => {
@@ -33,7 +33,7 @@ app.use("/api/messages", messageRoutes);
 
 const server = app.listen(process.env.APP_SERVER_PORT || 5000, () => {
   console.log(
-    `Server is running on port ${process.env.APP_SERVER_URL}:${process.env.APP_SERVER_PORT}`,
+    `Server is running on port ${process.env.APP_SERVER_URL}:${process.env.APP_SERVER_PORT}`
   );
 });
 
@@ -50,14 +50,34 @@ io.on("connection", (socket) => {
   global.chatSocket = socket;
 
   socket.on("add-user", (user) => {
-    onlineUsers.set(user._id, socket.id);
+    console.log(user);
+
+    onlineUsers.set(user._id, {
+      socketId: socket.id,
+      is_active: true,
+    });
+
+    io.emit("user-status-change", { userId: user._id, is_active: true });
   });
 
   socket.on("send-msg", (data) => {
     const sendUserSocket = onlineUsers.get(data.to);
 
     if (sendUserSocket) {
-      socket.to(sendUserSocket).emit("msg-receive", data.msg);
+      socket.to(sendUserSocket.socketId).emit("msg-receive", data.msg);
     }
+  });
+
+  socket.on("disconnect", () => {
+    onlineUsers.forEach((value, key) => {
+      if (value.socketId === socket.id) {
+        onlineUsers.set(key, {
+          socketId: socket.id,
+          is_active: false,
+        });
+
+        io.emit("user-status-change", { userId: key, is_active: false });
+      }
+    });
   });
 });
