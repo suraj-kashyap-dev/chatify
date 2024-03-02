@@ -20,7 +20,7 @@ function TopBar() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const storedData = localStorage.getItem("current-user");
+        const storedData = localStorage.getItem(import.meta.env.VITE_AUTH_USER);
         if (storedData) {
           setCurrentUser(JSON.parse(storedData));
         }
@@ -44,7 +44,7 @@ function TopBar() {
 
   const navigate = useNavigate();
   const handleConfirmAction = async () => {
-    const id = await JSON.parse(localStorage.getItem("current-user"))._id;
+    const id = await JSON.parse(localStorage.getItem(import.meta.env.VITE_AUTH_USER))._id;
 
     const data = await axios.get(`${logoutRoute}/${id}`);
 

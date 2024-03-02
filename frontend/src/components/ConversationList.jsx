@@ -12,7 +12,7 @@ function ConversationList({ contacts, changeChat }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const storedData = localStorage.getItem("current-user");
+      const storedData = localStorage.getItem(import.meta.env.VITE_AUTH_USER);
       if (storedData) {
         const data = JSON.parse(storedData);
         setCurrentname(data.name);

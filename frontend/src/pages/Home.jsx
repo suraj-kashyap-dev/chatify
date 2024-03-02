@@ -1,7 +1,7 @@
 import ConversagtionScreen from "../components/Screens/ConversagtionScreen";
 import Welcome from "../components/Screens/Welcome";
 import ConversationList from "../components/ConversationList";
-import { allUsersRoute, host } from "../utils/api";
+import { usersRoute, host } from "../utils/api";
 import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import axios from "axios";
@@ -20,10 +20,10 @@ function Home() {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!localStorage.getItem("current-user")) {
+      if (!localStorage.getItem(import.meta.env.VITE_AUTH_USER)) {
         navigate("/login");
       } else {
-        setCurrentUser(await JSON.parse(localStorage.getItem("current-user")));
+        setCurrentUser(await JSON.parse(localStorage.getItem(import.meta.env.VITE_AUTH_USER)));
       }
     };
 
@@ -41,7 +41,7 @@ function Home() {
   useEffect(() => {
     const fetchData = async () => {
       if (currentUser) {
-        const data = await axios.get(`${allUsersRoute}/${currentUser._id}`);
+        const data = await axios.get(`${usersRoute}/${currentUser._id}`);
 
         setContacts(data.data);
       }

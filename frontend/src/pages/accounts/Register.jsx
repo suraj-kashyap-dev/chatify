@@ -24,7 +24,7 @@ function Register() {
   });
 
   useEffect(() => {
-    if (localStorage.getItem("current-user")) {
+    if (localStorage.getItem(import.meta.env.VITE_AUTH_USER)) {
       navigate("/");
     }
   }, []);
@@ -85,7 +85,7 @@ function Register() {
       }
 
       if (data.status) {
-        localStorage.setItem("current-user", JSON.stringify(data.user));
+        localStorage.setItem(import.meta.env.VITE_AUTH_USER, JSON.stringify(data.user));
 
         navigate("/");
       }

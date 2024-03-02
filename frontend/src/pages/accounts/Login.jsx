@@ -19,7 +19,7 @@ function Login() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (localStorage.getItem("current-user")) {
+    if (localStorage.getItem(import.meta.env.VITE_AUTH_USER)) {
       navigate("/");
     }
   }, []);
@@ -65,7 +65,7 @@ function Login() {
       }
 
       if (data.status) {
-        localStorage.setItem("current-user", JSON.stringify(data.user));
+        localStorage.setItem(import.meta.env.VITE_AUTH_USER, JSON.stringify(data.user));
 
         navigate("/");
       }

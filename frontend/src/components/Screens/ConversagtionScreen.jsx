@@ -18,7 +18,7 @@ function ConversagtionScreen({ currentChat, socket }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await JSON.parse(localStorage.getItem("current-user"));
+      const data = await JSON.parse(localStorage.getItem(import.meta.env.VITE_AUTH_USER));
 
       const response = await axios.post(recieveMessageRoute, {
         from: data._id,
@@ -34,14 +34,14 @@ function ConversagtionScreen({ currentChat, socket }) {
   useEffect(() => {
     const getCurrentChat = async () => {
       if (currentChat) {
-        await JSON.parse(localStorage.getItem("current-user"))._id;
+        await JSON.parse(localStorage.getItem(import.meta.env.VITE_AUTH_USER))._id;
       }
     };
     getCurrentChat();
   }, [currentChat]);
 
   const handleSendMsg = async (msg) => {
-    const data = await JSON.parse(localStorage.getItem("current-user"));
+    const data = await JSON.parse(localStorage.getItem(import.meta.env.VITE_AUTH_USER));
 
     socket.current.emit("send-msg", {
       to: currentChat._id,
