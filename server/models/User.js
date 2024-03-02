@@ -19,12 +19,11 @@ const userSchema = mongoose.Schema({
     min: 8,
   },
   profile: {
+    type: String,
+  },
+  is_active: {
     type: Boolean,
     default: false,
-  },
-  avatarImage: {
-    type: String,
-    default: "",
   },
 });
 
