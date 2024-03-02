@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import userRoutes from "./routes/userRoutes.js";
 import messageRoutes from './routes/messagesRoutes.js';
 import cors from "cors";
-import { Server } from "socket.io"; // Import Server from 'socket.io'
+import { Server } from "socket.io";
 
 const app = express();
 

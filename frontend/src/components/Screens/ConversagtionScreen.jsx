@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { recieveMessageRoute, sendMessageRoute } from "../../utils/api";
 import ChatInput from "../BottomInput";
+import formatTimestamp from "../../helpers/dateTimeConverter";
 
 function ConversagtionScreen({ currentChat, socket }) {
   const [messages, setMessages] = useState([]);
@@ -45,6 +46,7 @@ function ConversagtionScreen({ currentChat, socket }) {
     socket.current.emit("send-msg", {
       to: currentChat._id,
       from: data._id,
+      created_at: formatTimestamp,
       msg,
     });
 

@@ -1,4 +1,4 @@
-const formatTimestamp = (timestamp) => {
+const formatTimestamp = (timestamp = new Date()) => {
   const date = new Date(timestamp);
 
   return date.toLocaleString("en-GB", {
