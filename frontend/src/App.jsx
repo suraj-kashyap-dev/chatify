@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
-import BaseMinSidebar from "./components/Base/BaseMiniSidebar";
+import BaseMiniSidebar from "./components/Base/BaseMiniSidebar";
 
 function App() {
   const navigate = useNavigate();
@@ -63,7 +63,7 @@ function App() {
     <>
       <div className="flex">
         <div className="flex">
-          <BaseMinSidebar></BaseMinSidebar>
+          <BaseMiniSidebar></BaseMiniSidebar>
 
           <BaseSideBar
             contacts={contacts}

@@ -158,7 +158,7 @@ function ConversagtionScreen({ currentChat, socket, setCurrentChat }) {
         position="left"
         size="small"
         onClose={toggleDrawer}
-        title="Suraj KAshayp"
+        title="Suraj Kashayp"
       ></Drawer>
     </>
   );

@@ -1,28 +1,9 @@
-import React, { useEffect, useState, useRef } from "react";
-import SearchBar from "./BaseSearchBar";
-import Avatar from "./BaesAvatar";
-import TopBar from "./BaseTopBar";
+import React, { useState } from "react";
+import BaseSearchBar from "./BaseSearchBar";
+import BaseAvatar from "./BaesAvatar";
 
 function ConversationList({ contacts, changeChat }) {
-  const [currentname, setCurrentname] = useState(undefined);
-
-  const [currentUserImage, setCurrentUserImage] = useState(undefined);
-
   const [currentSelected, setCurrentSelected] = useState(undefined);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const storedData = localStorage.getItem(import.meta.env.VITE_AUTH_USER);
-
-      if (storedData) {
-        const data = JSON.parse(storedData);
-        setCurrentname(data.name);
-        setCurrentUserImage(data.avatarImage);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   const changeCurrentChat = (index, contact) => {
     setCurrentSelected(index);
@@ -33,9 +14,15 @@ function ConversationList({ contacts, changeChat }) {
   return (
     <>
       <div className="select-none h-lvh p-1 w-1/4 min-w-[319px] max-w-[319px] bg-white border shadow-md sm:p-2 dark:bg-gray-800 dark:border-gray-700">
-        <TopBar></TopBar>
+        <div className="relative p-2">
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="text-2xl">Chats</span>
+            </div>
+          </div>
+        </div>
         <div className="flow-root">
-          <SearchBar></SearchBar>
+          <BaseSearchBar></BaseSearchBar>
           <ul
             role="list"
             className="divide-y divide-gray-200 dark:divide-gray-700"
@@ -46,11 +33,12 @@ function ConversationList({ contacts, changeChat }) {
                   key={contact.email}
                   onClick={() => changeCurrentChat(index, contact)}
                   className={`py-3 sm:py-4 cursor-pointer ${index == currentSelected ? "bg-gray-100" : ""} hover:bg-gray-100 p-2`}
+                  title={contact.name}
                 >
                   <div className="flex items-center space-x-4">
                     <div className="flex-shrink-0">
                       <div className="relative">
-                        <Avatar user={contact}></Avatar>
+                        <BaseAvatar user={contact}></BaseAvatar>
                       </div>
                     </div>
                     <div className="flex-1 min-w-0">
