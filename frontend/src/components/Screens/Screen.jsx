@@ -1,12 +1,12 @@
-import Toolbar from "../Toolbar";
-import ReceivedBubble from "../Bubbles/ReceivedBubble";
-import Sendedbubble from "../Bubbles/Sendedbubble";
-import Avatar from "../Avatar";
+import Toolbar from "../Base/BaseToolbar";
+import ReceivedBubble from "../Bubbles/Received";
+import Sendedbubble from "../Bubbles/Sended";
+import Avatar from "../Base/BaesAvatar";
 import React, { useState, useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { recieveMessageRoute, sendMessageRoute } from "../../utils/api";
-import ChatInput from "../ChatInput";
+import ChatInput from "../Base/BaseChatInput";
 import formatTimestamp from "../../helpers/dateTimeConverter";
 
 function ConversagtionScreen({ currentChat, socket }) {

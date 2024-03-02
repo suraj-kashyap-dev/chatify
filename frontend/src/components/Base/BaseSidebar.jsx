@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
-import SearchBar from "./SearchBar";
-import Avatar from "./Avatar";
-import TopBar from "./TopBar";
+import SearchBar from "./BaseSearchBar";
+import Avatar from "./BaesAvatar";
+import TopBar from "./BaseTopBar";
 
 function ConversationList({ contacts, changeChat }) {
   const [currentname, setCurrentname] = useState(undefined);

@@ -1,6 +1,6 @@
-import ConversagtionScreen from "../components/Screens/ConversagtionScreen";
+import Screen from "../components/Screens/Screen";
 import Welcome from "../components/Screens/Welcome";
-import ConversationList from "../components/ConversationList";
+import ConversationList from "../components/Base/BaseSidebar";
 import { usersRoute, host } from "../utils/api";
 import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
@@ -67,10 +67,10 @@ function Home() {
         {!currentChat ? (
           <Welcome />
         ) : (
-          <ConversagtionScreen
+          <Screen
             currentChat={currentChat}
             socket={socket}
-          ></ConversagtionScreen>
+          ></Screen>
         )}
       </div>
     </>

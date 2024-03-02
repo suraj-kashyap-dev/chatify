@@ -1,6 +1,6 @@
-import Avatar from "../Avatar";
+import Avatar from "../Base/BaesAvatar.jsx";
 import dateTimeConverter from "../../helpers/dateTimeConverter.js";
-import Drawer from "../Drawer";
+import Drawer from "../Base/BaseDrawer.jsx";
 import { useState } from "react";
 
 function ReceivedBubble({ message, user }) {

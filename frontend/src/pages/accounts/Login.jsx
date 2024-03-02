@@ -5,7 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { loginRoute } from "../../utils/api";
 import { toastOptions } from "../../utils/toast";
-import Loader from "../../components/Loader";
+import Loader from "../../components/Base/BaseLoader";
 
 function Login() {
   const [values, setValues] = useState({ email: "", password: "" });

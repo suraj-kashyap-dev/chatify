@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import Avatar from "./Avatar";
-import Drawer from "./Drawer";
+import Avatar from "./BaesAvatar";
+import Drawer from "./BaseDrawer";
 import { useNavigate } from "react-router-dom";
-import ConfirmationModal from "./ConfirmationModal";
+import ConfirmationModal from "./BaseConfirmationModal";
 import axios from "axios";
-import { logoutRoute } from "../utils/api";
+import { logoutRoute } from "../../utils/api";
 
 function TopBar() {
   const [currentUser, setCurrentUser] = useState({
