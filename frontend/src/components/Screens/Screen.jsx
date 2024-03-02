@@ -1,21 +1,21 @@
-import Toolbar from "../Base/BaseToolbar";
+import BaseToolbar from "../Base/BaseToolbar";
 import ReceivedBubble from "../Bubbles/Received";
 import Sendedbubble from "../Bubbles/Sended";
-import Avatar from "../Base/BaesAvatar";
+import BaseAvatar from "../Base/BaesAvatar";
 import React, { useState, useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { recieveMessageRoute, sendMessageRoute } from "../../utils/api";
-import ChatInput from "../Base/BaseChatInput";
+import BaseChatInput from "../Base/BaseChatInput";
 import formatTimestamp from "../../helpers/dateTimeConverter";
-import Drawer from "../Base/BaseDrawer";
+import BaseDrawer from "../Base/BaseDrawer";
 
 function ConversagtionScreen({ currentChat, socket, setCurrentChat }) {
   const [messages, setMessages] = useState([]);
 
-  const scrollRef = useRef();
-
   const [arrivalMessage, setArrivalMessage] = useState(null);
+
+  const scrollRef = useRef();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -116,7 +116,7 @@ function ConversagtionScreen({ currentChat, socket, setCurrentChat }) {
                 />
               </svg>
               <button onClick={toggleDrawer}>
-                <Avatar user={currentChat}></Avatar>
+                <BaseAvatar user={currentChat}></BaseAvatar>
               </button>
             </div>
             <div className="flex flex-col leading-tight">
@@ -126,7 +126,7 @@ function ConversagtionScreen({ currentChat, socket, setCurrentChat }) {
               <span className="text-lg text-gray-600">{currentChat.email}</span>
             </div>
           </div>
-          <Toolbar></Toolbar>
+          <BaseToolbar></BaseToolbar>
         </div>
 
         {/* Message Container */}
@@ -150,16 +150,16 @@ function ConversagtionScreen({ currentChat, socket, setCurrentChat }) {
           })}
         </div>
 
-        <ChatInput handleSendMsg={handleSendMsg}></ChatInput>
+        <BaseChatInput handleSendMsg={handleSendMsg}></BaseChatInput>
       </div>
 
-      <Drawer
+      <BaseDrawer
         isOpen={isDrawerOpen}
         position="left"
         size="small"
         onClose={toggleDrawer}
-        title="Suraj Kashayp"
-      ></Drawer>
+        title={currentChat.name}
+      ></BaseDrawer>
     </>
   );
 }
