@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import Avatar from "./Avatar";
 import Drawer from "./Drawer";
-import Profile from "./Profile";
 import { useNavigate } from "react-router-dom";
 import ConfirmationModal from "./ConfirmationModal";
 import axios from "axios";
@@ -76,7 +75,6 @@ function TopBar() {
               onClose={toggleDrawer}
               title={currentUser.name}
             >
-              <Profile currentUser={currentUser}></Profile>
             </Drawer>
           </div>
           <div>

@@ -1,7 +1,15 @@
 import Avatar from "../Avatar";
 import dateTimeConverter from "../../helpers/dateTimeConverter.js";
+import Drawer from "../Drawer";
+import { useState } from "react";
 
 function ReceivedBubble({ message, user }) {
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
+
+  const toggleDrawer = () => {
+    setDrawerOpen(!isDrawerOpen);
+  };
+
   return (
     <>
       <div className="chat-message cursor-pointer">
@@ -20,10 +28,20 @@ function ReceivedBubble({ message, user }) {
           </div>
 
           <div className="flex items-center">
-            <Avatar user={user} />
+            <button onClick={toggleDrawer}>
+              <Avatar user={user}></Avatar>
+            </button>
           </div>
         </div>
       </div>
+
+      <Drawer
+        isOpen={isDrawerOpen}
+        position="right"
+        size="small"
+        onClose={toggleDrawer}
+        title={user.name}
+      ></Drawer>
     </>
   );
 }
