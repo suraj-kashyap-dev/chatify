@@ -2,18 +2,14 @@ import Messages from "../models/Message.js";
 
 const getMessages = async (request, response, next) => {
   try {
-    const { from, to, page = 1, limit = 50 } = request.body;
-
-    const skip = (page - 1) * limit;
+    const { from, to } = request.body;
 
     const messages = await Messages.find({
       users: {
         $all: [from, to],
       },
     })
-      .sort({ updatedAt: 1 })
-      .skip(skip)
-      .limit(limit);
+      .sort({ updatedAt: 1 });
 
     const projectedMessages = messages.map((msg) => {
       return {
