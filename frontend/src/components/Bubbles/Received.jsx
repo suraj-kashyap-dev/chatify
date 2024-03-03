@@ -29,7 +29,7 @@ function ReceivedBubble({ message, user }) {
 
           <div className="flex items-center">
             <button onClick={toggleDrawer}>
-              <Avatar user={user}></Avatar>
+              <Avatar user={user} showStatus={false}></Avatar>
             </button>
           </div>
         </div>

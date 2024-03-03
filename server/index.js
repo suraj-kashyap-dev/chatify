@@ -54,10 +54,10 @@ io.on("connection", (socket) => {
   socket.on("add-user", (user) => {
     onlineUsers.set(user._id, {
       socketId: socket.id,
-      is_active: true,
+      status: "online",
     });
 
-    io.emit("user-status-change", { userId: user._id, is_active: true });
+    io.emit("user-status-change", { userId: user._id, status: "online" });
   });
 
   socket.on("send-msg", (data) => {
@@ -73,7 +73,7 @@ io.on("connection", (socket) => {
       if (value.socketId === socket.id) {
         onlineUsers.delete(key);
 
-        io.emit("user-status-change", { userId: key, is_active: false });
+        io.emit("user-status-change", { userId: key, status: "offline" });
       }
     });
   });

@@ -2,7 +2,7 @@ import BaseAvatar from "./BaesAvatar.jsx";
 import BaseDrawer from "../Base/BaseDrawer.jsx";
 import { useState } from "react";
 
-const BaseMiniSidebar = () => {
+const BaseMiniSidebar = ({ currentUser }) => {
   const [isSettingsDrawerOpen, setSettingsDrawerOpen] = useState(false);
 
   const [isProfileDrawerOpen, setProfileDrawerOpen] = useState(false);
@@ -72,24 +72,25 @@ const BaseMiniSidebar = () => {
         onClose={toggleProfileDrawer}
         title="Home"
       >
-        <div className="max-w-screen-lg mx-auto p-5">
-          <div className="flex flex-col items-center p-8  rounded-lg">
-            <div className="w-[100px] h-[100px] bg-violet-500 rounded-full flex items-center justify-center text-white cursor-pointer">
-              S
+        {currentUser ? (
+          <div className="max-w-screen-lg mx-auto p-5">
+            <div className="flex flex-col items-center p-8  rounded-lg">
+              <div className="w-[100px] h-[100px] bg-violet-500 rounded-full flex items-center justify-center text-white cursor-pointer">
+                <BaseAvatar user={currentUser} showStatus={false}></BaseAvatar>
+              </div>
+
+              <h1 className="mt-4 text-xl font-semibold text-gray-800">
+                {currentUser.name}
+              </h1>
+
+              <span className="mt-1 text-sm font-semibold text-gray-800">
+                {currentUser.email}
+              </span>
             </div>
-
-            <h1 className="mt-4 text-xl font-semibold text-gray-800">
-              Suraj Kashyap
-            </h1>
-
-            <span className="mt-1 text-sm font-semibold text-gray-800">
-              suraj.kashyap370@webkul.in
-            </span>
-            <p className="mt-2 text-gray-600 text-center">
-              Software Engineer | Senior Software Engineer | Webkul
-            </p>
           </div>
-        </div>
+        ) : (
+          ""
+        )}
       </BaseDrawer>
 
       {/* Settings Drawer */}

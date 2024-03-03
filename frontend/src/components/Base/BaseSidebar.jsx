@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import BaseSearchBar from "./BaseSearchBar";
 import BaseAvatar from "./BaesAvatar";
 
-function ConversationList({ contacts, changeChat }) {
+function ConversationList({ contacts, changeChat, currentUser }) {
   const [currentSelected, setCurrentSelected] = useState(undefined);
 
   const changeCurrentChat = (index, contact) => {
@@ -17,7 +17,9 @@ function ConversationList({ contacts, changeChat }) {
         <div className="relative p-2">
           <div className="flex items-center justify-between">
             <div>
-              <span className="text-2xl">Chats</span>
+              <span className="text-2xl">
+                {currentUser ? currentUser.name : ""}
+              </span>
             </div>
           </div>
         </div>

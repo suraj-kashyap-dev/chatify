@@ -12,7 +12,7 @@ const users = async (request, response, next) => {
       _id: {
         $ne: request.params.id,
       },
-    }).select(["email", "name", "avatarImage", "_id", "is_active"]);
+    }).select(["email", "name", "avatarImage", "_id", "status"]);
 
     return response.json(users);
   } catch (exception) {
@@ -55,13 +55,13 @@ const updateStatus = async (request, response) => {
       return response.json({ msg: "User id is required " });
     }
 
-    const { is_active } = request.body;
+    const { status } = request.body;
 
-    if (is_active === undefined) {
-      return response.json({ msg: "is_active field is required" });
+    if (status === undefined) {
+      return response.json({ msg: "status field is required" });
     }
 
-    await User.findByIdAndUpdate(userId, { is_active });
+    await User.findByIdAndUpdate(userId, { status });
 
     return response.status(200).send();
   } catch (error) {

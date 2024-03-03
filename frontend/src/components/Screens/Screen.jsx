@@ -95,7 +95,7 @@ function ConversagtionScreen({ currentChat, socket, setCurrentChat }) {
   }, [arrivalMessage]);
 
   useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+    scrollRef.current?.scrollIntoView({ behavior: "auto" });
   }, [messages]);
 
   const [isDrawerOpen, setDrawerOpen] = useState(false);

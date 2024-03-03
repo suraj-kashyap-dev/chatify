@@ -37,7 +37,7 @@ function App() {
     if (currentUser) {
       socket.current = io(host);
 
-      currentUser.is_active = true;
+      currentUser.status = "online";
 
       socket.current.emit("add-user", currentUser);
 
@@ -45,7 +45,7 @@ function App() {
         setContacts((prevContacts) =>
           prevContacts.map((contact) =>
             contact._id === user.userId
-              ? { ...contact, is_active: user.is_active }
+              ? { ...contact, status: user.status }
               : contact
           )
         );
@@ -53,7 +53,7 @@ function App() {
         const updateActiveStatus = async (user) => {
           if (currentUser) {
             await axios.post(`${updateStatus}/${user.userId}`, {
-              is_active: user.is_active
+              status: user.status
             });
           }
         };
@@ -83,11 +83,12 @@ function App() {
     <>
       <div className="flex">
         <div className="flex">
-          <BaseMiniSidebar></BaseMiniSidebar>
+          <BaseMiniSidebar currentUser={currentUser}></BaseMiniSidebar>
 
           <BaseSideBar
             contacts={contacts}
             changeChat={handleChatChange}
+            currentUser={currentUser}
           ></BaseSideBar>
         </div>
 

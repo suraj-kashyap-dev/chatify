@@ -21,9 +21,9 @@ const userSchema = mongoose.Schema({
   profile: {
     type: String,
   },
-  is_active: {
-    type: Boolean,
-    default: false,
+  status: {
+    type: String,
+    default: "active",
   },
 });
 
