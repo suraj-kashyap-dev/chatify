@@ -11,7 +11,7 @@ const getMessages = async (request, response, next) => {
         $all: [from, to],
       },
     })
-      .sort({ updatedAt: -1 })
+      .sort({ updatedAt: 1 })
       .skip(skip)
       .limit(limit);
 
