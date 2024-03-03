@@ -1,5 +1,5 @@
 import dateTimeConverter from "../../helpers/dateTimeConverter.js";
-
+import TruncateText from "../Base/TruncateText.jsx";
 function Sendedbubble({ message }) {
   return (
     <>
@@ -9,7 +9,7 @@ function Sendedbubble({ message }) {
             <div>
               <span className="px-4 py-2 rounded-lg inline-block rounded-br-none bg-violet-600 text-white ">
                 <div className="flex items-center gap-1 ">
-                  <span>{message.message}</span>
+                  <TruncateText text={message.message} maxWords={50} />
                 </div>
               </span>
             </div>

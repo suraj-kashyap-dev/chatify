@@ -2,6 +2,7 @@ import BaseAvatar from "../Base/BaesAvatar.jsx";
 import dateTimeConverter from "../../helpers/dateTimeConverter.js";
 import BaseDrawer from "../Base/BaseDrawer.jsx";
 import { useState } from "react";
+import TruncateText from "../Base/TruncateText.jsx";
 
 function ReceivedBubble({ message, user }) {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
@@ -18,7 +19,7 @@ function ReceivedBubble({ message, user }) {
             <div>
               <span className="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">
                 <div className="flex items-center gap-1">
-                  <span>{message.message}</span>
+                  <TruncateText text={message.message} maxWords={50} />
                 </div>
               </span>
             </div>
@@ -27,7 +28,7 @@ function ReceivedBubble({ message, user }) {
             </span>
           </div>
 
-          <div className="flex items-center">
+          <div className="flex items-end">
             <button onClick={toggleDrawer}>
               <BaseAvatar user={user} showStatus={false}></BaseAvatar>
             </button>
