@@ -2,13 +2,18 @@ import Messages from "../models/Message.js";
 
 const getMessages = async (request, response, next) => {
   try {
-    const { from, to } = request.body;
+    const { from, to, page = 1, limit = 50 } = request.body;
+
+    const skip = (page - 1) * limit;
 
     const messages = await Messages.find({
       users: {
         $all: [from, to],
       },
-    }).sort({ updatedAt: 1 });
+    })
+      .sort({ updatedAt: -1 })
+      .skip(skip)
+      .limit(limit);
 
     const projectedMessages = messages.map((msg) => {
       return {
@@ -17,6 +22,7 @@ const getMessages = async (request, response, next) => {
         created_at: msg.createdAt,
       };
     });
+
     response.json(projectedMessages);
   } catch (ex) {
     next(ex);
@@ -35,19 +41,16 @@ const addMessage = async (request, response, next) => {
 
     if (data) {
       return response.json({
-        msg: "Message added successfully."
+        msg: "Message added successfully.",
       });
     }
 
     return response.json({
-      msg: "Failed to add message to the database"
+      msg: "Failed to add message to the database",
     });
   } catch (ex) {
     next(ex);
   }
 };
 
-export {
-  addMessage,
-  getMessages,
-}
+export { addMessage, getMessages };

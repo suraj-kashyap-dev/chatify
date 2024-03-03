@@ -37,8 +37,6 @@ function App() {
     if (currentUser) {
       socket.current = io(host);
 
-      currentUser.status = "online";
-
       socket.current.emit("add-user", currentUser);
 
       socket.current.on("user-status-change", (user) => {

@@ -40,7 +40,7 @@ function ConversationList({ contacts, changeChat, currentUser }) {
                   <div className="flex items-center space-x-4">
                     <div className="flex-shrink-0">
                       <div className="relative">
-                        <BaseAvatar user={contact}></BaseAvatar>
+                        <BaseAvatar user={contact} showStatus={contact.status != "offline"}></BaseAvatar>
                       </div>
                     </div>
                     <div className="flex-1 min-w-0">

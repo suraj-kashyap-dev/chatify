@@ -68,4 +68,34 @@ const updateStatus = async (request, response) => {
     return response.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+
+/**
+ *  Get all users.
+ *
+ * @param {Object} request
+ * @param {Object} response
+ */
+const updateProfile = async (request, response) => {
+  try {
+    const userId = request.params.id;
+
+    if (!userId) {
+      return response.json({ msg: "User id is required " });
+    }
+
+    const { status } = request.body;
+
+    if (status === undefined) {
+      return response.json({ msg: "status field is required" });
+    }
+
+    await User.findByIdAndUpdate(userId, { status });
+
+    return response.status(200).send();
+  } catch (error) {
+    return response.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 export { users, logout, updateStatus };
