@@ -1,3 +1,5 @@
+// server.js
+
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
@@ -69,10 +71,7 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     onlineUsers.forEach((value, key) => {
       if (value.socketId === socket.id) {
-        onlineUsers.set(key, {
-          socketId: socket.id,
-          is_active: false,
-        });
+        onlineUsers.delete(key);
 
         io.emit("user-status-change", { userId: key, is_active: false });
       }

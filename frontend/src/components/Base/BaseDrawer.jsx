@@ -19,19 +19,19 @@ const Drawer = ({ isOpen, position, size, onClose, title, children }) => {
   const getSizeClass = () => {
     switch (size) {
       case "small":
-        return "w-1/4";
+        return "w-full sm:w-1/4"; // Set full width on small screens
       case "medium":
-        return "w-1/2";
+        return "w-full sm:w-1/2"; // Set full width on small screens
       case "large":
-        return "w-3/4";
+        return "w-full sm:w-3/4"; // Set full width on small screens
       default:
-        return "w-1/2";
+        return "w-full sm:w-1/2"; // Set full width on small screens
     }
   };
 
   return (
     <div
-      className={`fixed ${getPositionClass()} ${getSizeClass()} bg-white shadow-md transition-transform transform ${
+      className={`fixed ${getPositionClass()} ${getSizeClass()} bg-white shadow-md transition-transform transform duration-300 ${
         isOpen
           ? "translate-x-0"
           : position === "left"
@@ -40,7 +40,7 @@ const Drawer = ({ isOpen, position, size, onClose, title, children }) => {
       } z-50`}
       style={{ zIndex: 9999 }} // Set a high z-index value
     >
-      <div className="flex justify-between p-4 border-b">
+      <div className="flex justify-between p-4 sm:border-b">
         <h2 className="text-xl font-bold">{title}</h2>
         <button onClick={onClose} className="text-gray-600">
           Close

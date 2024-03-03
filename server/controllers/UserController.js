@@ -12,7 +12,7 @@ const users = async (request, response, next) => {
       _id: {
         $ne: request.params.id,
       },
-    }).select(["email", "name", "avatarImage", "_id"]);
+    }).select(["email", "name", "avatarImage", "_id", "is_active"]);
 
     return response.json(users);
   } catch (exception) {

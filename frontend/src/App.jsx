@@ -52,7 +52,7 @@ function App() {
 
         const updateActiveStatus = async (user) => {
           if (currentUser) {
-            await axios.post(`${updateStatus}/${currentUser._id}`, {
+            await axios.post(`${updateStatus}/${user.userId}`, {
               is_active: user.is_active
             });
           }
