@@ -178,7 +178,27 @@ function ConversagtionScreen({ currentChat, socket, setCurrentChat }) {
         size="small"
         onClose={toggleDrawer}
         title={currentChat.name}
-      ></BaseDrawer>
+      >
+        {currentChat ? (
+          <div className="max-w-screen-lg mx-auto p-5">
+            <div className="flex flex-col items-center p-8  rounded-lg">
+              <div className="w-[100px] h-[100px] bg-violet-500 rounded-full flex items-center justify-center text-white cursor-pointer">
+                <BaseAvatar user={currentChat} showStatus={false}></BaseAvatar>
+              </div>
+
+              <h1 className="mt-4 text-xl font-semibold text-gray-800">
+                {currentChat.name}
+              </h1>
+
+              <span className="mt-1 text-sm font-semibold text-gray-800">
+                {currentChat.email}
+              </span>
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
+      </BaseDrawer>
     </>
   );
 }
