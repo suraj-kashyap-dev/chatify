@@ -4,7 +4,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { registerRoute } from "../../utils/api";
-import { toastOptions } from "../../utils/toast";
+import { toastOptions } from "../../helpers/toast";
 
 function Register() {
   const navigate = useNavigate();

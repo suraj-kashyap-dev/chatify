@@ -9,15 +9,11 @@ const TruncateText = ({ text, maxWords }) => {
 
   const [isExpanded, setExpanded] = useState(false);
 
-  const handleToggle = () => {
-    setExpanded(!isExpanded);
-  };
-
   return (
     <div>
       <span>{isExpanded ? text : truncatedText}</span>
       {isTruncated && (
-        <button className="text-blue-500 ml-2" onClick={handleToggle}>
+        <button className="text-blue-500 ml-2" onClick={() => setExpanded(!isExpanded)}>
           {isExpanded ? "Read less" : "Read more"}
         </button>
       )}
