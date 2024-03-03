@@ -12,7 +12,7 @@ const users = async (request, response, next) => {
       _id: {
         $ne: request.params.id,
       },
-    }).select(["email", "name", "avatarImage", "_id", "status"]);
+    }).select(["email", "name", "profile", "_id", "status"]);
 
     return response.json(users);
   } catch (exception) {
@@ -69,7 +69,6 @@ const updateStatus = async (request, response) => {
   }
 };
 
-
 /**
  *  Get all users.
  *
@@ -81,21 +80,21 @@ const updateProfile = async (request, response) => {
     const userId = request.params.id;
 
     if (!userId) {
-      return response.json({ msg: "User id is required " });
+      return response.json({ msg: "User id is required" });
     }
 
-    const { status } = request.body;
+    if (request.file) {
+      await User.findByIdAndUpdate(userId, {
+        profile: request.file.filename,
+      });
 
-    if (status === undefined) {
-      return response.json({ msg: "status field is required" });
+      return response.status(200).json({ success: "Profile Updated" });
     }
 
-    await User.findByIdAndUpdate(userId, { status });
-
-    return response.status(200).send();
+    return response.json({ msg: "No file uploaded" });
   } catch (error) {
     return response.status(500).json({ error: "Internal Server Error" });
   }
 };
 
-export { users, logout, updateStatus };
+export { users, logout, updateStatus, updateProfile };

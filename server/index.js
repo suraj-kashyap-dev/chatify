@@ -1,5 +1,3 @@
-// server.js
-
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
@@ -7,6 +5,12 @@ import userRoutes from "./routes/userRoutes.js";
 import messageRoutes from "./routes/messagesRoutes.js";
 import cors from "cors";
 import { Server } from "socket.io";
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express();
 
@@ -29,6 +33,10 @@ const connectToDb = async () => {
 };
 
 connectToDb();
+
+const staticPath = path.join(__dirname, 'public');
+
+app.use('/public', express.static(staticPath));
 
 app.use("/api/auth", userRoutes);
 app.use("/api/messages", messageRoutes);

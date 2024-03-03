@@ -1,4 +1,5 @@
 export const host = import.meta.env.VITE_HOST_URL;
+export const userProfile = `${host}/public/users/profile/`;
 export const loginRoute = `${host}/api/auth/login`;
 export const registerRoute = `${host}/api/auth/register`;
 export const logoutRoute = `${host}/api/auth/logout`;
