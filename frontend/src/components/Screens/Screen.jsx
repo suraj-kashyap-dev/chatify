@@ -32,6 +32,7 @@ function ConversagtionScreen({ currentChat, socket, setCurrentChat }) {
         const response = await axios.post(recieveMessageRoute, {
           from: data._id,
           to: currentChat._id,
+          skip: 0,
         });
 
         setMessages(response.data);
@@ -104,6 +105,44 @@ function ConversagtionScreen({ currentChat, socket, setCurrentChat }) {
     setDrawerOpen(!isDrawerOpen);
   };
 
+  const containerRef = useRef(null);
+
+  const container = containerRef.current;
+
+  const handleScroll = async () => {
+    if (!container) {
+      return;
+    }
+
+    console.log(container.scrollTop);
+
+    if (! container.scrollTop) {
+      isMessagesLoadingSet(true);
+
+      const data = await JSON.parse(
+        localStorage.getItem(import.meta.env.VITE_AUTH_USER)
+      );
+
+      const response = await axios.post(recieveMessageRoute, {
+        from: data._id,
+        to: currentChat._id,
+        skip: 5,
+      });
+
+
+      const msgs = [...messages];
+
+      const newMessages = response.data;
+
+      setMessages([...newMessages, ...msgs]);
+
+      container.scrollTop = container.scrollHeight;
+      setTimeout(() => {
+        isMessagesLoadingSet(false);
+      }, 1000);
+    }
+  };
+
   return (
     <>
       {isMessagesLoading ? (
@@ -150,6 +189,8 @@ function ConversagtionScreen({ currentChat, socket, setCurrentChat }) {
           {/* Message Container */}
           <div
             id="messages"
+            onScroll={handleScroll}
+            ref={containerRef}
             className="custom-scrollbar flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-violet scrollbar-thumb-rounded scrollbar-track-violet-lighter scrollbar-w-2 scrolling-touch"
           >
             {messages.map((message) => {

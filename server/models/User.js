@@ -25,6 +25,9 @@ const userSchema = mongoose.Schema({
     type: String,
     default: "active",
   },
+  config: {
+    
+  }
 });
 
 const User = mongoose.model("users", userSchema);
