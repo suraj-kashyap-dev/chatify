@@ -75,9 +75,7 @@ const BaseMiniSidebar = ({ currentUser }) => {
         {currentUser ? (
           <div className="max-w-screen-lg mx-auto p-5">
             <div className="flex flex-col items-center p-8  rounded-lg">
-              <div className="w-[100px] h-[100px] bg-violet-500 rounded-full flex items-center justify-center text-white cursor-pointer">
-                <BaseAvatar user={currentUser} showStatus={false}></BaseAvatar>
-              </div>
+              <BaseAvatar user={currentUser} showStatus={false}></BaseAvatar>
 
               <h1 className="mt-4 text-xl font-semibold text-gray-800">
                 {currentUser.name}
