@@ -16,49 +16,61 @@ function ConversagtionScreen({ currentChat, socket, setCurrentChat }) {
 
   const [arrivalMessage, setArrivalMessage] = useState(null);
 
-  const [isMessagesLoading, isMessagesLoadingSet] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   const scrollRef = useRef();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      isMessagesLoadingSet(true);
+  const [page, setPage] = useState(1);
 
-      try {
-        const data = await JSON.parse(
-          localStorage.getItem(import.meta.env.VITE_AUTH_USER)
-        );
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
 
-        const response = await axios.post(recieveMessageRoute, {
+  const containerRef = useRef(null);
+
+  let element = document.getElementById('messages');
+
+  /**
+   * Initialy set all messages from here.
+   */
+  const fetchData = async () => {
+    setLoading(true);
+
+    try {
+      const data = await JSON.parse(
+        localStorage.getItem(import.meta.env.VITE_AUTH_USER)
+      );
+
+      const response = await axios.get(recieveMessageRoute, {
+        params: {
           from: data._id,
           to: currentChat._id,
-          skip: 0,
-        });
+          page,
+          pageSize: 10,
+        },
+      });
 
-        setMessages(response.data);
-      } finally {
-        isMessagesLoadingSet(false);
-      }
-    };
+      window.scrollTo({
+        top: 455
+      });
 
-    fetchData();
-  }, [currentChat]);
+      setMessages((prev) => [...(response.data.messages.reverse()),   ...prev]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  useEffect(() => {
-    const getCurrentChat = async () => {
-      if (currentChat) {
-        await JSON.parse(localStorage.getItem(import.meta.env.VITE_AUTH_USER))
-          ._id;
-      }
-    };
-
-    getCurrentChat();
-  }, [currentChat]);
-
+  /**
+   * Resonsible to send message.
+   * @param {String} msg
+   * @return {void}
+   */
   const handleSendMsg = async (msg) => {
     const data = await JSON.parse(
       localStorage.getItem(import.meta.env.VITE_AUTH_USER)
     );
+
+    window.scrollTo({
+      top: window.innerHeight / 2,
+    });
 
     socket.current.emit("send-msg", {
       to: currentChat._id,
@@ -83,6 +95,9 @@ function ConversagtionScreen({ currentChat, socket, setCurrentChat }) {
     setMessages(msgs);
   };
 
+  /**
+   * Socket.io receive message.
+   */
   useEffect(() => {
     if (socket.current) {
       socket.current.on("msg-receive", (msg) => {
@@ -91,61 +106,57 @@ function ConversagtionScreen({ currentChat, socket, setCurrentChat }) {
     }
   }, []);
 
+  /**
+   * Set arrival messages.
+   */
   useEffect(() => {
     arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage]);
 
+  /**
+   * Scrolling to bottom when load all messages.
+   */
   useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: "auto" });
+    scrollRef.current?.scrollIntoView();
   }, [messages]);
 
-  const [isDrawerOpen, setDrawerOpen] = useState(false);
+  const handleInfiniteScroll = () => {
+    try {
+      const msgContainer = document.getElementById("messages");
 
-  const toggleDrawer = () => {
-    setDrawerOpen(!isDrawerOpen);
-  };
+      if (msgContainer) {
+        const scrolledToTop = msgContainer.scrollTop === 0 && !loading;
 
-  const containerRef = useRef(null);
-
-  const container = containerRef.current;
-
-  const handleScroll = async () => {
-    if (!container) {
-      return;
-    }
-
-    console.log(container.scrollTop);
-
-    if (! container.scrollTop) {
-      isMessagesLoadingSet(true);
-
-      const data = await JSON.parse(
-        localStorage.getItem(import.meta.env.VITE_AUTH_USER)
-      );
-
-      const response = await axios.post(recieveMessageRoute, {
-        from: data._id,
-        to: currentChat._id,
-        skip: 5,
-      });
-
-
-      const msgs = [...messages];
-
-      const newMessages = response.data;
-
-      setMessages([...newMessages, ...msgs]);
-
-      container.scrollTop = container.scrollHeight;
-      setTimeout(() => {
-        isMessagesLoadingSet(false);
-      }, 1000);
+        if (scrolledToTop) {
+          setPage((prev) => prev + 1);
+        }
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
+
+  useEffect(() => {
+    fetchData();
+  }, [page]);
+
+  useEffect(() => {
+    const msgContainer = document.getElementById("messages");
+
+    if (msgContainer) {
+      msgContainer.addEventListener("scroll", handleInfiniteScroll);
+
+      return () => {
+        msgContainer.removeEventListener("scroll", handleInfiniteScroll);
+      };
+    }
+
+    return () => {};
+  }, [loading, page]);
 
   return (
     <>
-      {isMessagesLoading ? (
+      {loading ? (
         <div className="flex items-center w-full justify-center">
           <Loader />
         </div>
@@ -170,7 +181,7 @@ function ConversagtionScreen({ currentChat, socket, setCurrentChat }) {
                     />
                   </svg>
                 </button>
-                <button onClick={toggleDrawer}>
+                <button onClick={() => setPage(() => page + 1)}>
                   <BaseAvatar user={currentChat}></BaseAvatar>
                 </button>
               </div>
@@ -189,7 +200,6 @@ function ConversagtionScreen({ currentChat, socket, setCurrentChat }) {
           {/* Message Container */}
           <div
             id="messages"
-            onScroll={handleScroll}
             ref={containerRef}
             className="custom-scrollbar flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-violet scrollbar-thumb-rounded scrollbar-track-violet-lighter scrollbar-w-2 scrolling-touch"
           >
@@ -217,7 +227,7 @@ function ConversagtionScreen({ currentChat, socket, setCurrentChat }) {
         isOpen={isDrawerOpen}
         position="left"
         size="small"
-        onClose={toggleDrawer}
+        onClose={() => setDrawerOpen(!isDrawerOpen)}
         title={currentChat.name}
       >
         {currentChat ? (

@@ -9,6 +9,6 @@ router.use(bodyParser.urlencoded({ extended: true }));
 
 
 router.post("/add-message/", addMessage);
-router.post("/get-messages/", getMessages);
+router.get("/get-messages/", getMessages);
 
 export default router;
