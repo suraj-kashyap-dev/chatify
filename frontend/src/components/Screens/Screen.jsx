@@ -18,23 +18,25 @@ function ConversagtionScreen({ currentChat, socket, setCurrentChat }) {
 
   const [loading, setLoading] = useState(true);
 
-  const scrollRef = useRef();
-
   const [page, setPage] = useState(1);
-
-  const [isDrawerOpen, setDrawerOpen] = useState(false);
 
   const containerRef = useRef(null);
 
-  let element = document.getElementById('messages');
+  const scrollRef = useRef();
+
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView();
+  }, [messages]);
 
   /**
    * Initialy set all messages from here.
    */
   const fetchData = async () => {
-    setLoading(true);
-
     try {
+      setLoading(true);
+
       const data = await JSON.parse(
         localStorage.getItem(import.meta.env.VITE_AUTH_USER)
       );
@@ -48,15 +50,15 @@ function ConversagtionScreen({ currentChat, socket, setCurrentChat }) {
         },
       });
 
-      window.scrollTo({
-        top: 455
-      });
-
-      setMessages((prev) => [...(response.data.messages.reverse()),   ...prev]);
+      setMessages((prev) => [...response.data.reverse(), ...prev]);
     } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchData();
+  }, [page]);
 
   /**
    * Resonsible to send message.
@@ -67,10 +69,6 @@ function ConversagtionScreen({ currentChat, socket, setCurrentChat }) {
     const data = await JSON.parse(
       localStorage.getItem(import.meta.env.VITE_AUTH_USER)
     );
-
-    window.scrollTo({
-      top: window.innerHeight / 2,
-    });
 
     socket.current.emit("send-msg", {
       to: currentChat._id,
@@ -113,46 +111,9 @@ function ConversagtionScreen({ currentChat, socket, setCurrentChat }) {
     arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage]);
 
-  /**
-   * Scrolling to bottom when load all messages.
-   */
-  useEffect(() => {
-    scrollRef.current?.scrollIntoView();
-  }, [messages]);
-
-  const handleInfiniteScroll = () => {
-    try {
-      const msgContainer = document.getElementById("messages");
-
-      if (msgContainer) {
-        const scrolledToTop = msgContainer.scrollTop === 0 && !loading;
-
-        if (scrolledToTop) {
-          setPage((prev) => prev + 1);
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
+  const handleScroll = () => {
+    const container = containerRef.current;
   };
-
-  useEffect(() => {
-    fetchData();
-  }, [page]);
-
-  useEffect(() => {
-    const msgContainer = document.getElementById("messages");
-
-    if (msgContainer) {
-      msgContainer.addEventListener("scroll", handleInfiniteScroll);
-
-      return () => {
-        msgContainer.removeEventListener("scroll", handleInfiniteScroll);
-      };
-    }
-
-    return () => {};
-  }, [loading, page]);
 
   return (
     <>
@@ -199,8 +160,8 @@ function ConversagtionScreen({ currentChat, socket, setCurrentChat }) {
 
           {/* Message Container */}
           <div
-            id="messages"
             ref={containerRef}
+            onScroll={handleScroll}
             className="custom-scrollbar flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-violet scrollbar-thumb-rounded scrollbar-track-violet-lighter scrollbar-w-2 scrolling-touch"
           >
             {messages.map((message) => {

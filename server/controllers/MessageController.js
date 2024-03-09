@@ -1,22 +1,17 @@
 import Messages from "../models/Message.js";
 
-const getMessages = async(req, res) => {
+const getMessages = async (request, response, next) => {
   try {
-    const { from, to, page = 1, pageSize = 10 } = req.query;
-    const skip = (page - 1) * pageSize;
-
-    const totalMessagesCount = await Messages.countDocuments({
-      users: { $all: [from, to] },
-    });
-
-    const totalPages = Math.ceil(totalMessagesCount / pageSize);
+    const { from, to, page = 1, pageSize = 10 } = request.query;
 
     const messages = await Messages.find({
-      users: { $all: [from, to] },
+      users: {
+        $all: [from, to],
+      },
     })
-      .sort({ updatedAt: -1 }) // Sort in descending order
-      .skip(parseInt(skip, 10))
-      .limit(parseInt(pageSize, 10));
+      .sort({ updatedAt: -1 })
+      .skip((page - 1) * pageSize)
+      .limit(parseInt(pageSize));
 
     const projectedMessages = messages.map((msg) => {
       return {
@@ -26,15 +21,11 @@ const getMessages = async(req, res) => {
       };
     });
 
-    res.json({
-      messages: projectedMessages,
-      totalPages,
-    });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+    response.json(projectedMessages);
+  } catch (ex) {
+    next(ex);
   }
 };
-
 
 const addMessage = async (request, response, next) => {
   try {
